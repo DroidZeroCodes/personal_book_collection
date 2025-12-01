@@ -23,7 +23,7 @@
                             book.status : 'not_started' ; const currentStatus=statusMap[currentStatusKey] || {
                             text: 'Unknown' , class: 'bg-danger-subtle text-danger' , icon: 'bi-question-circle' }; %>
                             <div class="card shadow-sm border-0 rounded-4" style="width: 200px;">
-                                <a href="/books/<%= book.olid %>" class="text-decoration-none text-dark">
+                                <a href="/books/<%= book.id %>" class="text-decoration-none text-dark">
                                     <% if (book.cover_edition_key) { %>
                                         <img class="card-img-top object-fit-cover rounded-top-4"
                                             src="https://covers.openlibrary.org/b/olid/<%= book.cover_edition_key %>-L.jpg"

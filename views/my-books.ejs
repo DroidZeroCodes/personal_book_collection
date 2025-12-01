@@ -1,0 +1,35 @@
+<%- include('partials/header.ejs') %>
+    <main class="container h-auto mt-4">
+        <div class="row text-center my-5">
+            <h2 class="">Welcome to Book Notes</h2>
+            <p class="text-secondary fs-5">Your personal space to manage and review your book collection.</p>
+        </div>
+        <div class="row container">
+            <h3>Recent Books</h3>
+            <ul class="container list-unstyled my-4">
+                <% if (books.length> 0) { %>
+                    <% books.forEach(function(book) { %>
+                        <li class="row">
+                            <div class="card p-0" style="width: 200px;">
+                                <div class="card-body">
+                                    <h5 class="card-title">Title</h5>
+                                </div>
+                                <img src="https://covers.openlibrary.org/b/olid/OL51694024M-L.jpg" alt="">
+                                <div class="card-footer text-center text-body-secondary">
+                                    <% for( let index=0; index < book.rating; index++ ) { %>
+                                        ⭐
+                                        <% } %>
+                                </div>
+                            </div>
+                        </li>
+                        <% }); } else { %>
+                            <li class="row d-flex flex-column justify-content-center text-center fs-5"
+                                style="height: 240px;">
+                                <p>No recent books available.</p>
+                            </li>
+                            <% } %>
+            </ul>
+        </div>
+    </main>
+
+    <%- include('partials/footer.ejs') %>

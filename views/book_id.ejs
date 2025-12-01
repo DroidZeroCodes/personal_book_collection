@@ -1,0 +1,134 @@
+<%- include('partials/header.ejs') %>
+
+    <main class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-4">
+                <div class="sticky-top" style="top: 2rem; z-index: 1;">
+                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden position-relative">
+                        <div class="bg-light">
+                            <% if (oliBook.cover_edition_key) { %>
+                                <img class="card-img object-fit-cover"
+                                    src="https://covers.openlibrary.org/b/olid/<%= oliBook.cover_edition_key %>-L.jpg"
+                                    alt="<%= oliBook.title %> Cover" loading="lazy">
+                                <% } else { %>
+                                    <img class="card-img object-fit-cover"
+                                        src="../public/images/dummy_400x600_ffffff_cccccc.png"
+                                        alt="No cover available" loading="lazy">
+                                    <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-8">
+
+                <div class="d-flex flex-column align-items-start mb-4">
+                    <div class="mb-2">
+                        <span
+                            class="badge d-flex align-items-center gap-2 bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill px-3">
+                            <i class="bi bi-calendar3"></i>
+                            <%= oliBook.publish_year %>
+                        </span>
+                    </div>
+
+                    <h1 class="display-4 fw-bold text-dark mb-1 lh-1">
+                        <%= oliBook.title %>
+                    </h1>
+
+                    <h4 class="text-secondary fw-light fs-4">
+                        by <span class="text-dark fw-medium">
+                            <%= oliBook.author %>
+                        </span>
+                    </h4>
+                </div>
+
+                <div class="card border-0 shadow-sm rounded-4 bg-light mb-5">
+                    <div class="card-body p-4">
+
+                        <% if (!oliBook.inMyList) { %>
+                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                                <div>
+                                    <h5 class="fw-bold mb-1">Add to your collection</h5>
+                                    <small class="text-secondary">Track your reading progress and write reviews.</small>
+                                </div>
+                                <form action="/books/<%= oliBook.olid %>" method="POST" class="flex-shrink-0">
+                                    <input type="hidden" name="olid" value="<%= oliBook.olid %>">
+                                    <button type="submit" class="btn btn-dark btn-lg rounded-pill px-4 shadow-sm">
+                                        <i class="bi bi-plus-lg me-2"></i>Add to Library
+                                    </button>
+                                </form>
+                            </div>
+
+                            <% } else { %>
+                                <div class="d-flex flex-column gap-4">
+
+                                    <div
+                                        class="alert alert-success d-flex align-items-center py-2 px-3 border-0 rounded-3 mb-0 shadow-sm">
+                                        <i class="bi bi-check-circle-fill me-2 fs-5"></i>
+                                        <span class="fw-medium">This book is in your library</span>
+                                    </div>
+
+                                    <form action="/books/<%= oliBook.olid %>/status" method="post">
+                                        <label class="form-label fw-bold text-uppercase fs-7 text-secondary small mb-2"
+                                            style="letter-spacing: 0.5px;">
+                                            Reading Status
+                                        </label>
+                                        <div class="input-group input-group-lg gap-2">
+                                            <select name="status"
+                                                class="form-select border-secondary-subtle focus-ring focus-ring-secondary text-secondary fw-medium"
+                                                aria-label="Reading status">
+                                                <option value="not_started" <%=oliBook.status===('not_started')
+                                                    ? 'selected' : '' %>>Not Started</option>
+                                                <option value="reading" <%=oliBook.status===('reading') ? 'selected'
+                                                    : '' %>>Currently Reading</option>
+                                                <option value="finished" <%=oliBook.status===('finished') ? 'selected'
+                                                    : '' %>>Finished</option>
+                                                <option value="dropped" <%=oliBook.status===('dropped') ? 'selected'
+                                                    : '' %>>Dropped</option>
+                                            </select>
+                                            <button type="submit" class="btn btn-dark px-4 fw-medium">
+                                                Update
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <div>
+                                        <a href="/books/<%= oliBook.olid %>/review"
+                                            class="btn btn-white border border-secondary-subtle w-100 py-3 shadow-sm d-flex align-items-center justify-content-center gap-2 hover-shadow">
+                                            <i class="bi bi-pencil-square"></i>
+                                            <span class="fw-semibold">Write a Review</span>
+                                        </a>
+                                    </div>
+
+                                </div>
+                                <% } %>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <h5 class="fw-bold border-bottom pb-2 mb-3">Synopsis</h5>
+                    <p class="text-secondary lh-lg fs-6 lead">
+                        <%= oliBook.description || "No description available for this title yet." %>
+                    </p>
+                </div>
+
+                <% if (oliBook.links && oliBook.links.length> 0) { %>
+                    <div class="mb-4">
+                        <h6 class="fw-bold text-uppercase fs-7 text-secondary mb-3 small">External Resources</h6>
+                        <div class="d-flex flex-wrap gap-2">
+                            <% oliBook.links.forEach(link=> { %>
+                                <a href="<%= link.url %>" class="btn btn-sm btn-light border rounded-pill px-3"
+                                    target="_blank">
+                                    <i class="bi bi-link-45deg me-1"></i>
+                                    <%= link.title %>
+                                </a>
+                                <% }) %>
+                        </div>
+                    </div>
+                    <% } %>
+
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer.ejs') %>

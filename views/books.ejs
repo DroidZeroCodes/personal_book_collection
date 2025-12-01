@@ -1,134 +1,162 @@
 <%- include('partials/header.ejs') %>
 
     <main class="container py-5">
-        <div class="row g-5">
-            <div class="col-lg-4">
-                <div class="sticky-top" style="top: 2rem; z-index: 1;">
-                    <div class="card border-0 shadow-lg rounded-4 overflow-hidden position-relative">
-                        <div class="bg-light">
-                            <% if (oliBook.cover_edition_key) { %>
-                                <img class="card-img object-fit-cover"
-                                    src="https://covers.openlibrary.org/b/olid/<%= oliBook.cover_edition_key %>-L.jpg"
-                                    alt="<%= oliBook.title %> Cover" loading="lazy">
-                                <% } else { %>
-                                    <img class="card-img object-fit-cover"
-                                        src="data:image/png;base64,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"
-                                        alt="No cover available" loading="lazy">
-                                    <% } %>
-                        </div>
-                    </div>
-                </div>
+        <div class="row mb-5 align-items-end">
+            <div class="col-md-8">
+                <h1 class="display-5 fw-bold text-dark">My Library</h1>
+                <p class="text-secondary fs-5 mb-0">Manage your collection and track your progress.</p>
             </div>
-
-            <div class="col-lg-8">
-
-                <div class="d-flex flex-column align-items-start mb-4">
-                    <div class="mb-2">
-                        <span
-                            class="badge d-flex align-items-center gap-2 bg-secondary-subtle text-secondary border border-secondary-subtle rounded-pill px-3">
-                            <i class="bi bi-calendar3"></i>
-                            <%= oliBook.publish_year %>
-                        </span>
-                    </div>
-
-                    <h1 class="display-4 fw-bold text-dark mb-1 lh-1">
-                        <%= oliBook.title %>
-                    </h1>
-
-                    <h4 class="text-secondary fw-light fs-4">
-                        by <span class="text-dark fw-medium">
-                            <%= oliBook.author %>
-                        </span>
-                    </h4>
-                </div>
-
-                <div class="card border-0 shadow-sm rounded-4 bg-light mb-5">
-                    <div class="card-body p-4">
-
-                        <% if (!oliBook.inMyList) { %>
-                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
-                                <div>
-                                    <h5 class="fw-bold mb-1">Add to your collection</h5>
-                                    <small class="text-secondary">Track your reading progress and write reviews.</small>
-                                </div>
-                                <form action="/books/<%= oliBook.olid %>" method="POST" class="flex-shrink-0">
-                                    <input type="hidden" name="olid" value="<%= oliBook.olid %>">
-                                    <button type="submit" class="btn btn-dark btn-lg rounded-pill px-4 shadow-sm">
-                                        <i class="bi bi-plus-lg me-2"></i>Add to Library
-                                    </button>
-                                </form>
-                            </div>
-
-                            <% } else { %>
-                                <div class="d-flex flex-column gap-4">
-
-                                    <div
-                                        class="alert alert-success d-flex align-items-center py-2 px-3 border-0 rounded-3 mb-0 shadow-sm">
-                                        <i class="bi bi-check-circle-fill me-2 fs-5"></i>
-                                        <span class="fw-medium">This book is in your library</span>
-                                    </div>
-
-                                    <form action="/books/<%= oliBook.olid %>/status" method="post">
-                                        <label class="form-label fw-bold text-uppercase fs-7 text-secondary small mb-2"
-                                            style="letter-spacing: 0.5px;">
-                                            Reading Status
-                                        </label>
-                                        <div class="input-group input-group-lg gap-2">
-                                            <select name="status"
-                                                class="form-select border-secondary-subtle focus-ring focus-ring-secondary text-secondary fw-medium"
-                                                aria-label="Reading status">
-                                                <option value="not_started" <%=oliBook.status===('not_started')
-                                                    ? 'selected' : '' %>>Not Started</option>
-                                                <option value="reading" <%=oliBook.status===('reading') ? 'selected'
-                                                    : '' %>>Currently Reading</option>
-                                                <option value="finished" <%=oliBook.status===('finished') ? 'selected'
-                                                    : '' %>>Finished</option>
-                                                <option value="dropped" <%=oliBook.status===('dropped') ? 'selected'
-                                                    : '' %>>Dropped</option>
-                                            </select>
-                                            <button type="submit" class="btn btn-dark px-4 fw-medium">
-                                                Update
-                                            </button>
-                                        </div>
-                                    </form>
-
-                                    <div>
-                                        <a href="/books/<%= oliBook.olid %>/review"
-                                            class="btn btn-white border border-secondary-subtle w-100 py-3 shadow-sm d-flex align-items-center justify-content-center gap-2 hover-shadow">
-                                            <i class="bi bi-pencil-square"></i>
-                                            <span class="fw-semibold">Write a Review</span>
-                                        </a>
-                                    </div>
-
-                                </div>
-                                <% } %>
-                    </div>
-                </div>
-
-                <div class="mb-5">
-                    <h5 class="fw-bold border-bottom pb-2 mb-3">Synopsis</h5>
-                    <p class="text-secondary lh-lg fs-6 lead">
-                        <%= oliBook.description || "No description available for this title yet." %>
-                    </p>
-                </div>
-
-                <% if (oliBook.links && oliBook.links.length> 0) { %>
-                    <div class="mb-4">
-                        <h6 class="fw-bold text-uppercase fs-7 text-secondary mb-3 small">External Resources</h6>
-                        <div class="d-flex flex-wrap gap-2">
-                            <% oliBook.links.forEach(link=> { %>
-                                <a href="<%= link.url %>" class="btn btn-sm btn-light border rounded-pill px-3"
-                                    target="_blank">
-                                    <i class="bi bi-link-45deg me-1"></i>
-                                    <%= link.title %>
-                                </a>
-                                <% }) %>
-                        </div>
-                    </div>
-                    <% } %>
-
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <a href="/oli/search" class="btn btn-dark rounded-pill px-4 shadow-sm">
+                    <i class="bi bi-plus-lg me-2"></i>Find New Books
+                </a>
             </div>
         </div>
+
+        <% const statusMap={ 'not_started' : { text: 'Not Started' , class: 'bg-secondary-subtle text-secondary' ,
+            icon: 'bi-bookmark' }, 'reading' : { text: 'Reading' , class: 'bg-primary-subtle text-primary' ,
+            icon: 'bi-book' }, 'finished' : { text: 'Finished' , class: 'bg-success-subtle text-success' ,
+            icon: 'bi-check-circle' }, 'dropped' : { text: 'Dropped' , class: 'bg-danger-subtle text-danger' ,
+            icon: 'bi-x-circle' } }; %>
+
+            <% if (books && books.length> 0) { %>
+
+                <div class="d-flex flex-column gap-4">
+                    <% books.forEach(function(book) { const currentStatusKey=book.status && statusMap[book.status] ?
+                        book.status : 'not_started' ; const currentStatus=statusMap[currentStatusKey]; %>
+
+                        <div class="card border-0 shadow-sm rounded-4 overflow-hidden transition-hover">
+                            <div class="row g-0">
+
+                                <div
+                                    class="col-md-3 col-lg-2 bg-light d-flex align-items-center justify-content-center position-relative">
+                                    <a href="/books/<%= book.id %>"
+                                        class="w-100 h-100 d-flex justify-content-center align-items-center text-decoration-none">
+                                        <% if (book.cover_edition_key) { %>
+                                            <img src="https://covers.openlibrary.org/b/olid/<%= book.cover_edition_key %>-L.jpg"
+                                                class="img-fluid object-fit-cover w-100 h-100" alt="<%= book.title %>"
+                                                style="min-height: 200px; max-height: 250px;" loading="lazy">
+                                            <% } else { %>
+                                                <div class="p-5">
+                                                    <i class="bi bi-book text-secondary fs-1"></i>
+                                                </div>
+                                                <% } %>
+                                    </a>
+
+                                    <div class="d-md-none position-absolute top-0 start-0 m-2">
+                                        <span class="badge <%= currentStatus.class %> shadow-sm">
+                                            <i class="bi <%= currentStatus.icon %>"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-9 col-lg-10">
+                                    <div class="card-body p-4 d-flex flex-column h-100">
+
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <div>
+                                                <h4 class="card-title fw-bold mb-1">
+                                                    <a href="/books/<%= book.id %>"
+                                                        class="text-decoration-none text-dark hover-underline">
+                                                        <%= book.title %>
+                                                    </a>
+                                                </h4>
+                                                <p class="text-secondary mb-0">
+                                                    <%= book.author %>
+                                                </p>
+                                            </div>
+                                            <span
+                                                class="d-none d-md-inline-flex badge <%= currentStatus.class %> px-3 py-2 rounded-pill align-items-center gap-2">
+                                                <i class="bi <%= currentStatus.icon %>"></i>
+                                                <%= currentStatus.text %>
+                                            </span>
+                                        </div>
+
+                                        <% if (book.content) { %>
+                                            <div class="bg-light rounded-3 p-3 my-3 border border-light-subtle">
+                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                    <i class="bi bi-quote text-secondary fs-4 lh-1"></i>
+                                                    <span class="fw-bold text-uppercase fs-7 text-secondary small">Your
+                                                        Review</span>
+                                                </div>
+                                                <p class="mb-0 text-dark fst-italic text-truncate-3-lines">
+                                                    "<%= book.content %>"
+                                                </p>
+                                            </div>
+                                            <% } else { %>
+                                                <div class="my-auto py-2"></div>
+                                                <% } %>
+
+                                                    <div
+                                                        class="mt-auto pt-3 border-top d-flex flex-wrap justify-content-between align-items-center gap-3">
+
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <% if (book.rating> 0) { %>
+                                                                <div class="text-warning fs-5">
+                                                                    <% for(let i=0; i < book.rating; i++) { %> <i
+                                                                            class="bi bi-star-fill"></i>
+                                                                        <% } %>
+                                                                            <% for(let i=book.rating; i < 5; i++) { %>
+                                                                                <i
+                                                                                    class="bi bi-star text-secondary opacity-25"></i>
+                                                                                <% } %>
+                                                                </div>
+                                                                <span class="text-secondary small fw-medium">(<%=
+                                                                        book.rating %>/5)</span>
+                                                                <% } else { %>
+                                                                    <span class="text-secondary small fst-italic">No
+                                                                        rating yet</span>
+                                                                    <% } %>
+                                                        </div>
+
+                                                        <a href="/books/<%= book.id %>/review"
+                                                            class="btn btn-outline-dark rounded-pill px-4 d-flex align-items-center gap-2">
+                                                            <i class="bi bi-pencil-square"></i>
+                                                            <%= (book.content || book.rating) ? 'Edit Review'
+                                                                : 'Write Review' %>
+                                                        </a>
+                                                    </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <% }); %>
+                </div>
+
+                <% } else { %>
+                    <div class="text-center py-5 bg-light rounded-4 border border-secondary-subtle">
+                        <i class="bi bi-journals text-secondary display-1 mb-3"></i>
+                        <h3>Your library is empty</h3>
+                        <p class="text-secondary">Start searching to add books to your collection.</p>
+                        <a href="/oli/search" class="btn btn-primary mt-2 rounded-pill px-4">
+                            <i class="bi bi-search me-2"></i>Search Open Library
+                        </a>
+                    </div>
+                    <% } %>
     </main>
+
+    <style>
+        /* Helper for line clamping the review text */
+        .text-truncate-3-lines {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .hover-underline:hover {
+            text-decoration: underline !important;
+        }
+
+        .transition-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .transition-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+        }
+    </style>
 
     <%- include('partials/footer.ejs') %>
